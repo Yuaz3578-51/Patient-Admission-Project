@@ -45,45 +45,6 @@ else
     <p>No applications data available.</p>
 }
 
-@if (ViewBag.PatientsData != null && ViewBag.PatientsData.Count > 0)
-{
-    <h3>Patients data from the database:</h3>
-    <table>
-        <thead>
-            <tr>
-                <th>PatientID</th>
-                <th>PatientFName</th>
-                <th>PatientLName</th>
-                <th>PatientAddress</th>
-                <th>PatientDateOfBirth</th>
-                <th>PatientNumber</th>
-                <th>PatientPhone</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var patient in ViewBag.PatientsData)
-            {
-                <tr>
-                    <td>@patient.PatientID</td>
-                    <td>@patient.PatientFName</td>
-                    <td>@patient.PatientLName</td>
-                    <td>@patient.PatientAddress</td>
-                    <td>@patient.PatientDateOfBirth</td>
-                    <td>@patient.PatientNumber</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-else
-{
-    <p>No patients data available.</p>
-}
-
-<!-- Add the button to go to the AddPatient page -->
-<a asp-controller="Home" asp-action="AddPatient" class="btn btn-primary">Add New Patient</a>
-
-
  
 @if (ViewBag.PatientsData != null && ViewBag.PatientsData.Count > 0)
 {
@@ -124,4 +85,7 @@ else
 {
     <p>No patients data available.</p>
 }
+
+<!-- Add the button to go to the AddPatient page -->
+<a asp-controller="Home" asp-action="AddPatient" class="btn btn-primary">Add New Patient</a>
 

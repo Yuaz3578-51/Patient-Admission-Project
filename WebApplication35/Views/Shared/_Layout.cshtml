@@ -29,6 +29,12 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index2">General</a>
                             </li>
                         </ul>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <form class="form-inline" method="post" asp-controller="Home" asp-action="Logout">
+                                <button class="btn btn-primary" type="submit">Logout</button>
+                            </form>
+                        }
                     </div>
                 </div>
             </nav>
