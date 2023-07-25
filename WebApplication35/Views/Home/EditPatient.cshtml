@@ -1,0 +1,82 @@
+﻿@model (WebApplication35.Models.Patient patient, WebApplication35.Models.Application application)
+
+@{
+    ViewData["Title"] = "Edit Patient";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form method="post" asp-controller="Home" asp-action="SavePatientChanges">
+    <div>
+        <label>Patient ID:</label>
+        <input type="text" asp-for="patient.PatientID" readonly />
+    </div>
+    <div>
+        <label>First Name:</label>
+        <input type="text" asp-for="patient.PatientFName" />
+    </div>
+    <div>
+        <label>Last Name:</label>
+        <input type="text" asp-for="patient.PatientLName" />
+    </div>
+    <div>
+        <label>Address:</label>
+        <input type="text" asp-for="patient.PatientAddress" />
+    </div>
+    <div>
+        <label>Date of Birth:</label>
+        <input type="date" asp-for="patient.PatientDateOfBirth" />
+    </div>
+    <div>
+        <label>Patient Number:</label>
+        <input type="text" asp-for="patient.PatientNumber" />
+    </div>
+    <div>
+        <label>Patient Phone:</label>
+        <input type="text" asp-for="patient.PatientPhone" />
+    </div>
+
+    <!-- Add the input fields for Application properties -->
+    <div>
+        <label>AppID:</label>
+        <input type="text" asp-for="application.AppID" />
+    </div>
+    <div>
+        <label>UnitID:</label>
+        <input type="text" asp-for="application.UnitID" />
+    </div>
+    <div>
+        <label>StaffID:</label>
+        <input type="text" asp-for="application.StaffID" />
+    </div>
+    <div>
+        <label>Record Date:</label>
+        <input type="date" asp-for="application.Record_Date" />
+    </div>
+    <div>
+        <label>Diagnosis ID:</label>
+        <input type="text" asp-for="application.Diagnosis_ID" />
+    </div>
+    <div>
+        <label>Diagnosis Date:</label>
+        <input type="date" asp-for="application.Diagnosis_Date" />
+    </div>
+
+    <!-- Display validation errors -->
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger" role="alert">
+            @foreach (var key in ViewData.ModelState.Keys)
+            {
+                foreach (var error in ViewData.ModelState[key].Errors)
+                {
+                    @error.ErrorMessage
+
+                    <br />
+                }
+            }
+        </div>
+    }
+
+    <button type="submit">Save Changes</button>
+</form>

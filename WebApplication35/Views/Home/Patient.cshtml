@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "Patient";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (ViewBag.data != null && ViewBag.data.Count > 0)
+{
+    <p>Data from the "Patient" table:</p>
+    <table>
+        <thead>
+            <tr>
+                <th>PatientID</th>
+                <th>PatientNumber</th>
+                <th>PatientFName</th>
+                <th>PatientLName</th>
+                <th>PatientAddress</th>
+                <th>PatientDateOfBirth</th>
+                <th>PatientPhone</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.data)
+            {
+                <tr>
+                    <td>@item.PatientID</td>
+                    <td>@item.PatientNumber</td>
+                    <td>@item.PatientFName</td>
+                    <td>@item.PatientLName</td>
+                    <td>@item.PatientAddress</td>
+                    <td>@item.PatientDateOfBirth</td>
+                    <td>@item.PatientPhone</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No data available.</p>
+}

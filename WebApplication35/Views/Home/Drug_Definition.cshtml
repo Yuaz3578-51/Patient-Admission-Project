@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Drug Definitions";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (ViewBag.data != null && ViewBag.data.Count > 0)
+{
+    <p>Data from the "Drug_Definition" table:</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Drug_ID</th>
+                <th>Formula</th>
+                <th>Cost</th>
+                <th>TradeName</th>
+                <th>DrugName</th>
+                <th>Category</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.data)
+            {
+                <tr>
+                    <td>@item.Drug_ID</td>
+                    <td>@item.Formula</td>
+                    <td>@item.Cost</td>
+                    <td>@item.TradeName</td>
+                    <td>@item.DrugName</td>
+                    <td>@item.Category</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No data available.</p>
+}

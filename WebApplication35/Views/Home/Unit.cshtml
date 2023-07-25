@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Unit";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (ViewBag.data != null && ViewBag.data.Count > 0)
+{
+    <p>Data from the "Unit" table:</p>
+    <table>
+        <thead>
+            <tr>
+                <th>UnitID</th>
+                <th>UnitName</th>
+                <th>UnitDescription</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.data)
+            {
+                <tr>
+                    <td>@item.UnitID</td>
+                    <td>@item.UnitName</td>
+                    <td>@item.UnitDescription</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No data available.</p>
+}

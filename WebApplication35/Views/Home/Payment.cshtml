@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Payment";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (ViewBag.data != null && ViewBag.data.Count > 0)
+{
+    <p>Data from the "Payment" table:</p>
+    <table>
+        <thead>
+            <tr>
+                <th>PaymentID</th>
+                <th>AdmissionID</th>
+                <th>AppID</th>
+                <th>TotalCost</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.data)
+            {
+                <tr>
+                    <td>@item.PaymentID</td>
+                    <td>@item.AdmissionID</td>
+                    <td>@item.AppID</td>
+                    <td>@item.TotalCost</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No data available.</p>
+}
