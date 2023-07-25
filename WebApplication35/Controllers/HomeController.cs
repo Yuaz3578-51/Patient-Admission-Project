@@ -143,7 +143,6 @@ namespace WebApplication35.Controllers
         public IActionResult Index(string username, string password)
         {
             // Replace this with your logic to validate the username and password against your database
-            // For demonstration purposes, let's assume a valid username is "admin" and password is "password"
             if (username == "YUNUS" && password == "12345")
             {
                 // If the login is successful, redirect to the desired page (e.g., Index2)
