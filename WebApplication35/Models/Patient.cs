@@ -24,6 +24,7 @@ namespace WebApplication35.Models
         public string? PatientAddress { get; set; }
 
         [Column("PATIENTDATEOFBIRTH")]
+       // [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         public DateTime PatientDateOfBirth { get; set; }
 
         [Column("PATIENTPHONE")]

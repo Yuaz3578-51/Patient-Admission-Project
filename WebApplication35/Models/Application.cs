@@ -21,12 +21,14 @@ namespace WebApplication35.Models
         public int StaffID { get; set; }
 
         [Column("RECORD_DATE")]
+       // [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         public DateTime Record_Date { get; set; }
 
         [Column("DIAGNOSIS_ID")]
         public int Diagnosis_ID { get; set; }
 
         [Column("DIAGNOSIS_DATE")]
+       // [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         public DateTime Diagnosis_Date { get; set; }
 
         // Navigation properties for the related entities
@@ -43,7 +45,4 @@ namespace WebApplication35.Models
         // ...
     }
 }
-
-// Other model classes (Drug_Definition, Examination, Hospital, Patient, Payment, Prescription, Staff, Staff_Type, Unit, etc.)
-// ...
 
