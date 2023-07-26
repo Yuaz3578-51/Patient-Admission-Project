@@ -60,8 +60,8 @@ namespace WebApplication35.Controllers
                     connection.Open();
 
                     // Create the OracleCommand with the INSERT query
-                    string insertQuery = "INSERT INTO Patient (PatientID, PatientFName, PatientLName, PatientAddress, PatientDateOfBirth, PatientNumber) " +
-                                         "VALUES (:PatientID, :PatientFName, :PatientLName, :PatientAddress, :PatientDateOfBirth, :PatientNumber)";
+                    string insertQuery = "INSERT INTO Patient (PatientID, PatientFName, PatientLName, PatientAddress, PatientDateOfBirth, PatientNumber, PatientPhone) " +
+                                         "VALUES (:PatientID, :PatientFName, :PatientLName, :PatientAddress, :PatientDateOfBirth, :PatientNumber, :PatientPhone)";
 
                     using (OracleCommand cmd = new OracleCommand(insertQuery, connection))
                     {
@@ -72,6 +72,17 @@ namespace WebApplication35.Controllers
                         cmd.Parameters.Add(new OracleParameter("PatientAddress", OracleDbType.Varchar2)).Value = newPatient.PatientAddress;
                         cmd.Parameters.Add(new OracleParameter("PatientDateOfBirth", OracleDbType.Date)).Value = newPatient.PatientDateOfBirth;
                         cmd.Parameters.Add(new OracleParameter("PatientNumber", OracleDbType.Varchar2)).Value = newPatient.PatientNumber;
+
+                        // Check for DBNull value for PatientPhone
+                        if (newPatient.PatientPhone != null)
+                        {
+                            cmd.Parameters.Add(new OracleParameter("PatientPhone", OracleDbType.Varchar2)).Value = newPatient.PatientPhone;
+                        }
+                        else
+                        {
+                            // Set a default value for PatientPhone (e.g., an empty string)
+                            cmd.Parameters.Add(new OracleParameter("PatientPhone", OracleDbType.Varchar2)).Value = string.Empty;
+                        }
 
                         // Execute the query
                         cmd.ExecuteNonQuery();
@@ -97,7 +108,8 @@ namespace WebApplication35.Controllers
                                     PatientLName = reader.GetString(reader.GetOrdinal("PatientLName")),
                                     PatientAddress = reader.GetString(reader.GetOrdinal("PatientAddress")),
                                     PatientDateOfBirth = reader.GetDateTime(reader.GetOrdinal("PatientDateOfBirth")),
-                                    PatientNumber = reader.GetInt32(reader.GetOrdinal("PatientNumber"))
+                                    PatientNumber = reader.GetInt32(reader.GetOrdinal("PatientNumber")),
+                                    PatientPhone = reader.IsDBNull(reader.GetOrdinal("PatientPhone")) ? null : reader.GetString(reader.GetOrdinal("PatientPhone"))
                                 };
 
                                 patients.Add(patient);
@@ -130,6 +142,7 @@ namespace WebApplication35.Controllers
             // If there was an error, return to the Index2 view without adding the patient
             return RedirectToAction("Index2");
         }
+
 
 
 
@@ -270,6 +283,10 @@ namespace WebApplication35.Controllers
         }
 
 
+
+
+
+
         [HttpGet]
         public IActionResult EditPatient(int patientID)
         {
@@ -322,6 +339,7 @@ namespace WebApplication35.Controllers
                                 application = new Application
                                 {
                                     AppID = reader.GetInt32(reader.GetOrdinal("AppID")),
+                                    PatientID = reader.GetInt32(reader.GetOrdinal("PatientID")), // Add this line to set the PatientID property
                                     UnitID = reader.GetInt32(reader.GetOrdinal("UnitID")),
                                     StaffID = reader.GetInt32(reader.GetOrdinal("StaffID")),
                                     Record_Date = reader.GetDateTime(reader.GetOrdinal("Record_Date")),
@@ -340,6 +358,9 @@ namespace WebApplication35.Controllers
                 ViewData["ErrorMessage"] = "An error occurred while fetching patient data for editing.";
             }
 
+            // Create a tuple of the Patient and Application objects
+            var model = new Tuple<Patient, Application>(patient, application);
+
             // If patient is null, it means the patient with the provided ID does not exist in the database
             if (patient == null)
             {
@@ -347,11 +368,11 @@ namespace WebApplication35.Controllers
                 return RedirectToAction("Index2");
             }
 
-            // Create a tuple of the Patient and Application objects
-            var model = new Tuple<Patient, Application>(patient, application);
-
             return View(model);
         }
+
+
+
 
         [HttpPost]
         public IActionResult SavePatientChanges(Patient editedPatient, Application editedApplication)

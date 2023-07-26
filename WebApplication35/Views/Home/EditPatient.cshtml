@@ -7,59 +7,83 @@
 <h2>@ViewData["Title"]</h2>
 
 <form method="post" asp-controller="Home" asp-action="SavePatientChanges">
-    <div>
-        <label>Patient ID:</label>
-        <input type="text" asp-for="Item1.PatientID" readonly />
-    </div>
-    <div>
-        <label>First Name:</label>
-        <input type="text" asp-for="Item1.PatientFName" />
-    </div>
-    <div>
-        <label>Last Name:</label>
-        <input type="text" asp-for="Item1.PatientLName" />
-    </div>
-    <div>
-        <label>Address:</label>
-        <input type="text" asp-for="Item1.PatientAddress" />
-    </div>
-    <div>
-        <label>Date of Birth:</label>
-        <input type="date" asp-for="Item1.PatientDateOfBirth" />
-    </div>
-    <div>
-        <label>Patient Number:</label>
-        <input type="text" asp-for="Item1.PatientNumber" />
-    </div>
-    <div>
-        <label>Patient Phone:</label>
-        <input type="text" asp-for="Item1.PatientPhone" />
+
+    <!-- Add the input fields for Patient-->
+    <div class="form-group">
+        <label for="PatientID">Patient ID:</label>
+        <input type="text" id="PatientID" name="PatientID" asp-for="Item1.PatientID" class="form-control" readonly />
     </div>
 
-    <!-- Add the input fields for Application properties -->
-    <div>
-        <label>AppID:</label>
-        <input type="text" asp-for="Item2.AppID" />
+
+    <div class="form-group">
+        <label for="AppID">App ID:</label>
+        <input type="text" id="AppID" name="AppID" asp-for="Item2.AppID" class="form-control" />
     </div>
-    <div>
-        <label>UnitID:</label>
-        <input type="text" asp-for="Item2.UnitID" />
+
+
+    <div class="form-group">
+        <label for="UnitID">Unit ID:</label>
+        <input type="text" id="UnitID" name="UnitID" asp-for="Item2.UnitID" class="form-control" />
     </div>
-    <div>
-        <label>StaffID:</label>
-        <input type="text" asp-for="Item2.StaffID" />
+
+
+    <div class="form-group">
+        <label for="StaffID">Staff ID:</label>
+        <input type="text" id="StaffID" name="StaffID" asp-for="Item2.StaffID" class="form-control" />
     </div>
-    <div>
-        <label>Record Date:</label>
-        <input type="date" asp-for="Item2.Record_Date" />
+
+
+    <div class="form-group">
+        <label for="Record_Date">Record Date:</label>
+        <input type="date" id="Record_Date" name="Record_Date" asp-for="Item2.Record_Date" class="form-control" />
     </div>
-    <div>
-        <label>Diagnosis ID:</label>
-        <input type="text" asp-for="Item2.Diagnosis_ID" />
+
+
+    <div class="form-group">
+        <label for="Diagnosis_ID">Diagnosis ID:</label>
+        <input type="text" id="Diagnosis_ID" name="Diagnosis_ID" asp-for="Item2.Diagnosis_ID" class="form-control" />
     </div>
-    <div>
-        <label>Diagnosis Date:</label>
-        <input type="date" asp-for="Item2.Diagnosis_Date" />
+
+
+    <div class="form-group">
+        <label for="Diagnosis_Date">Diagnosis Date:</label>
+        <input type="date" id="Diagnosis_Date" name="Diagnosis_Date" asp-for="Item2.Diagnosis_Date" class="form-control" />
+    </div>
+
+
+    <div class="form-group">
+        <label for="PatientFName">First Name:</label>
+        <input type="text" id="PatientFName" name="PatientFName" asp-for="Item1.PatientFName" class="form-control" />
+    </div>
+
+
+    <div class="form-group">
+        <label for="PatientLName">Last Name:</label>
+        <input type="text" id="PatientLName" name="PatientLName" asp-for="Item1.PatientLName" class="form-control" />
+    </div>
+
+
+    <div class="form-group">
+        <label for="PatientAddress">Address:</label>
+        <input type="text" id="PatientAddress" name="PatientAddress" asp-for="Item1.PatientAddress" class="form-control" />
+    </div>
+
+
+    <div class="form-group">
+        <label for="PatientDateOfBirth">Date of Birth:</label>
+        <input type="date" id="PatientDateOfBirth" name="PatientDateOfBirth" asp-for="Item1.PatientDateOfBirth" class="form-control" />
+    </div>
+
+
+    <div class="form-group">
+        <label for="PatientNumber">Patient Number:</label>
+        <input type="text" id="PatientNumber" name="PatientNumber" asp-for="Item1.PatientNumber" class="form-control" />
+    </div>
+
+
+    <div class="form-group">
+        <label for="PatientPhone">Patient Phone:</label>
+        <input type="text" id="PatientPhone" name="PatientPhone" asp-for="Item1.PatientPhone" class="form-control" />
     </div>
 
     <!-- Display validation errors -->
@@ -71,12 +95,11 @@
                 foreach (var error in ViewData.ModelState[key].Errors)
                 {
                     @error.ErrorMessage
-
                     <br />
                 }
             }
         </div>
     }
 
-    <button type="submit">Save Changes</button>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
 </form>

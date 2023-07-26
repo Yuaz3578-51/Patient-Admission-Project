@@ -5,60 +5,60 @@
 <!-- Add your patient admission form here -->
 @using (Html.BeginForm("AddPatient", "Home", FormMethod.Post))
 {
-    <div>
+    <div class="form-group">
         <label for="PatientID">Patient ID:</label>
-        <input type="text" id="PatientID" name="PatientID" />
+        <input type="text" id="PatientID" name="PatientID" class="form-control" />
     </div>
-    <div>
+    <div class="form-group">
         <label for="PatientFName">First Name:</label>
-        <input type="text" id="PatientFName" name="PatientFName" />
+        <input type="text" id="PatientFName" name="PatientFName" class="form-control" />
     </div>
-    <div>
+    <div class="form-group">
         <label for="PatientLName">Last Name:</label>
-        <input type="text" id="PatientLName" name="PatientLName" />
+        <input type="text" id="PatientLName" name="PatientLName" class="form-control" />
     </div>
-    <div>
+    <div class="form-group">
         <label for="PatientAddress">Address:</label>
-        <input type="text" id="PatientAddress" name="PatientAddress" />
+        <input type="text" id="PatientAddress" name="PatientAddress" class="form-control" />
     </div>
-    <div>
+    <div class="form-group">
         <label for="PatientDateOfBirth">Date of Birth:</label>
-        <input type="date" id="PatientDateOfBirth" name="PatientDateOfBirth" />
+        <input type="date" id="PatientDateOfBirth" name="PatientDateOfBirth" class="form-control" />
     </div>
-    <div>
+    <div class="form-group">
         <label for="PatientNumber">Patient Number:</label>
-        <input type="text" id="PatientNumber" name="PatientNumber" />
+        <input type="text" id="PatientNumber" name="PatientNumber" class="form-control" />
     </div>
-    <div>
+    <div class="form-group">
         <label for="PatientPhone">Patient Phone:</label>
-        <input type="text" id="PatientPhone" name="PatientPhone" />
+        <input type="text" id="PatientPhone" name="PatientPhone" class="form-control" />
     </div>
 
     <!-- Additional properties -->
-    <div>
+    <div class="form-group">
         <label for="AppID">App ID:</label>
-        <input type="text" id="AppID" name="AppID" />
+        <input type="text" id="AppID" name="AppID" class="form-control" />
     </div>
-    <div>
+    <div class="form-group">
         <label for="UnitID">Unit ID:</label>
-        <input type="text" id="UnitID" name="UnitID" />
+        <input type="text" id="UnitID" name="UnitID" class="form-control" />
     </div>
-    <div>
+    <div class="form-group">
         <label for="StaffID">Staff ID:</label>
-        <input type="text" id="StaffID" name="StaffID" />
+        <input type="text" id="StaffID" name="StaffID" class="form-control" />
     </div>
-    <div>
+    <div class="form-group">
         <label for="Record_Date">Record Date:</label>
-        <input type="date" id="Record_Date" name="Record_Date" />
+        <input type="date" id="Record_Date" name="Record_Date" class="form-control" />
     </div>
-    <div>
+    <div class="form-group">
         <label for="Diagnosis_ID">Diagnosis ID:</label>
-        <input type="text" id="Diagnosis_ID" name="Diagnosis_ID" />
+        <input type="text" id="Diagnosis_ID" name="Diagnosis_ID" class="form-control" />
     </div>
-    <div>
+    <div class="form-group">
         <label for="Diagnosis_Date">Diagnosis Date:</label>
-        <input type="date" id="Diagnosis_Date" name="Diagnosis_Date" />
+        <input type="date" id="Diagnosis_Date" name="Diagnosis_Date" class="form-control" />
     </div>
 
-    <button type="submit">Admit Patient</button>
+    <button type="submit" class="btn btn-primary">Admit Patient</button>
 }
