@@ -274,9 +274,10 @@ namespace WebApplication35.Controllers
         public IActionResult EditPatient(int patientID)
         {
             // Fetch the patient data based on the provided patientID
-            string connectionString = "Data Source=ORCL;User Id=YUNUS;Password=12345; Connection Timeout=60; Max Pool Size=150; data source= (DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = YUNUS-SAHBAZ.probel.local)(PORT = 1521)) (CONNECT_DATA =(SERVER = DEDICATED)(SERVICE_NAME = ORCL)))"; // Replace with your actual connection string
-            Patient? patient = null;
-            Application? application = null;
+            string connectionString = "Data Source=ORCL;User Id=YUNUS;Password=12345; Connection Timeout=60; Max Pool Size=150; data source= (DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = YUNUS-SAHBAZ.probel.local)(PORT = 1521)) (CONNECT_DATA =(SERVER = DEDICATED)(SERVICE_NAME = ORCL)))";
+
+            Patient patient = null;
+            Application application = null;
 
             try
             {
@@ -299,7 +300,7 @@ namespace WebApplication35.Controllers
                                     PatientFName = reader.GetString(reader.GetOrdinal("PatientFName")),
                                     PatientLName = reader.GetString(reader.GetOrdinal("PatientLName")),
                                     PatientAddress = reader.GetString(reader.GetOrdinal("PatientAddress")),
-                                    PatientDateOfBirth = GetSafeDateTime(reader, "PatientDateOfBirth"),
+                                    PatientDateOfBirth = reader.GetDateTime(reader.GetOrdinal("PatientDateOfBirth")),
                                     PatientNumber = reader.GetInt32(reader.GetOrdinal("PatientNumber")),
                                     PatientPhone = reader.GetString(reader.GetOrdinal("PatientPhone"))
                                 };
@@ -323,9 +324,9 @@ namespace WebApplication35.Controllers
                                     AppID = reader.GetInt32(reader.GetOrdinal("AppID")),
                                     UnitID = reader.GetInt32(reader.GetOrdinal("UnitID")),
                                     StaffID = reader.GetInt32(reader.GetOrdinal("StaffID")),
-                                    Record_Date = GetSafeDateTime(reader, "Record_Date"),
+                                    Record_Date = reader.GetDateTime(reader.GetOrdinal("Record_Date")),
                                     Diagnosis_ID = reader.GetInt32(reader.GetOrdinal("Diagnosis_ID")),
-                                    Diagnosis_Date = GetSafeDateTime(reader, "Diagnosis_Date")
+                                    Diagnosis_Date = reader.GetDateTime(reader.GetOrdinal("Diagnosis_Date"))
                                 };
                             }
                         }
@@ -347,11 +348,10 @@ namespace WebApplication35.Controllers
             }
 
             // Create a tuple of the Patient and Application objects
-            var model = (patient, application);
+            var model = new Tuple<Patient, Application>(patient, application);
 
             return View(model);
         }
-
 
         [HttpPost]
         public IActionResult SavePatientChanges(Patient editedPatient, Application editedApplication)
@@ -362,11 +362,11 @@ namespace WebApplication35.Controllers
                 if (!ModelState.IsValid)
                 {
                     // If there are validation errors, return to the EditPatient view
-                    return View("EditPatient", (editedPatient, editedApplication));
+                    return View("EditPatient", new Tuple<Patient, Application>(editedPatient, editedApplication));
                 }
 
                 // Update the patient data and application data in the database
-                string connectionString = "Data Source=ORCL;User Id=YUNUS;Password=12345; Connection Timeout=60; Max Pool Size=150; data source= (DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = YUNUS-SAHBAZ.probel.local)(PORT = 1521)) (CONNECT_DATA =(SERVER = DEDICATED)(SERVICE_NAME = ORCL)))"; // Replace with your actual connection string
+                string connectionString = "Data Source=ORCL;User Id=YUNUS;Password=12345; Connection Timeout=60; Max Pool Size=150; data source= (DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = YUNUS-SAHBAZ.probel.local)(PORT = 1521)) (CONNECT_DATA =(SERVER = DEDICATED)(SERVICE_NAME = ORCL)))";
 
                 using (OracleConnection connection = new OracleConnection(connectionString))
                 {
@@ -385,7 +385,7 @@ namespace WebApplication35.Controllers
                         cmd.Parameters.Add(new OracleParameter("PatientLName", OracleDbType.Varchar2)).Value = editedPatient.PatientLName;
                         cmd.Parameters.Add(new OracleParameter("PatientAddress", OracleDbType.Varchar2)).Value = editedPatient.PatientAddress;
                         cmd.Parameters.Add(new OracleParameter("PatientDateOfBirth", OracleDbType.Date)).Value = editedPatient.PatientDateOfBirth;
-                        cmd.Parameters.Add(new OracleParameter("PatientNumber", OracleDbType.Varchar2)).Value = editedPatient.PatientNumber;
+                        cmd.Parameters.Add(new OracleParameter("PatientNumber", OracleDbType.Int32)).Value = editedPatient.PatientNumber;
                         cmd.Parameters.Add(new OracleParameter("PatientPhone", OracleDbType.Varchar2)).Value = editedPatient.PatientPhone;
 
                         cmd.ExecuteNonQuery();
@@ -400,22 +400,17 @@ namespace WebApplication35.Controllers
 
                     using (OracleCommand cmd = new OracleCommand(updateApplicationQuery, connection))
                     {
-                        cmd.Parameters.Add(new OracleParameter("AppID", OracleDbType.Int32)).Value = editedApplication.AppID;
-                        cmd.Parameters.Add(new OracleParameter("UnitID", OracleDbType.Int32)).Value = editedApplication.UnitID;
-                        cmd.Parameters.Add(new OracleParameter("StaffID", OracleDbType.Int32)).Value = editedApplication.StaffID;
-                        cmd.Parameters.Add(new OracleParameter("Record_Date", OracleDbType.Date)).Value = editedApplication.Record_Date;
-                        cmd.Parameters.Add(new OracleParameter("Diagnosis_ID", OracleDbType.Int32)).Value = editedApplication.Diagnosis_ID;
-                        cmd.Parameters.Add(new OracleParameter("Diagnosis_Date", OracleDbType.Date)).Value = editedApplication.Diagnosis_Date;
+                        cmd.Parameters.Add("UnitID", OracleDbType.Int32).Value = editedApplication.UnitID;
+                        cmd.Parameters.Add("StaffID", OracleDbType.Int32).Value = editedApplication.StaffID;
+                        cmd.Parameters.Add("Record_Date", OracleDbType.Date).Value = editedApplication.Record_Date;
+                        cmd.Parameters.Add("Diagnosis_ID", OracleDbType.Int32).Value = editedApplication.Diagnosis_ID;
+                        cmd.Parameters.Add("Diagnosis_Date", OracleDbType.Date).Value = editedApplication.Diagnosis_Date;
+                        cmd.Parameters.Add("AppID", OracleDbType.Int32).Value = editedApplication.AppID;
 
                         cmd.ExecuteNonQuery();
                     }
+
                 }
-
-                _logger.LogInformation("Patient data updated: {PatientID}, {PatientFName}, {PatientLName}, {PatientAddress}, {PatientDateOfBirth}, {PatientNumber}",
-                    editedPatient.PatientID, editedPatient.PatientFName, editedPatient.PatientLName, editedPatient.PatientAddress, editedPatient.PatientDateOfBirth, editedPatient.PatientNumber);
-
-                _logger.LogInformation("Application data updated: {AppID}, {UnitID}, {StaffID}, {Record_Date}, {Diagnosis_ID}, {Diagnosis_Date}",
-                    editedApplication.AppID, editedApplication.UnitID, editedApplication.StaffID, editedApplication.Record_Date, editedApplication.Diagnosis_ID, editedApplication.Diagnosis_Date);
 
                 // Redirect to the Index2 action after successfully updating the patient and application information
                 return RedirectToAction("Index2");
@@ -428,7 +423,68 @@ namespace WebApplication35.Controllers
             }
 
             // If there was an error, return to the EditPatient view to allow the user to try again
-            return View("EditPatient", (editedPatient, editedApplication));
+            return View("EditPatient", new Tuple<Patient, Application>(editedPatient, editedApplication));
+        }
+
+
+
+
+
+        [HttpPost]
+        public IActionResult DeletePatient(int patientID)
+        {
+            try
+            {
+                // Create the OracleConnection using your connection string
+                string connectionString = "Data Source=ORCL;User Id=YUNUS;Password=12345; Connection Timeout=60; Max Pool Size=150; data source= (DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = YUNUS-SAHBAZ.probel.local)(PORT = 1521)) (CONNECT_DATA =(SERVER = DEDICATED)(SERVICE_NAME = ORCL)))";
+
+                using (OracleConnection connection = new OracleConnection(connectionString))
+                {
+                    connection.Open();
+
+                    // Check if the patient exists in the database before deleting
+                    string checkPatientQuery = "SELECT COUNT(*) FROM Patient WHERE PatientID = :PatientID";
+                    using (OracleCommand checkCmd = new OracleCommand(checkPatientQuery, connection))
+                    {
+                        checkCmd.Parameters.Add(new OracleParameter("PatientID", OracleDbType.Int32)).Value = patientID;
+
+                        int patientCount = Convert.ToInt32(checkCmd.ExecuteScalar());
+
+                        if (patientCount == 0)
+                        {
+                            // Patient with the specified patientID does not exist in the database
+                            ViewData["ErrorMessage"] = "Patient not found.";
+                            return RedirectToAction("Index2");
+                        }
+                    }
+
+                    // Delete the patient from the database based on the provided patientID
+                    string deletePatientQuery = "DELETE FROM Patient WHERE PatientID = :PatientID";
+                    using (OracleCommand deleteCmd = new OracleCommand(deletePatientQuery, connection))
+                    {
+                        deleteCmd.Parameters.Add(new OracleParameter("PatientID", OracleDbType.Int32)).Value = patientID;
+                        deleteCmd.ExecuteNonQuery();
+                    }
+
+                    // Redirect to the Index2 action after successfully deleting the patient
+                    return RedirectToAction("Index2");
+                }
+            }
+            catch (OracleException ex)
+            {
+                // Handle any exceptions related to the database connection or query
+                ViewData["ErrorMessage"] = "An error occurred while deleting the patient from the database.";
+                _logger.LogError(ex, "Error occurred while deleting the patient from the database.");
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions
+                ViewData["ErrorMessage"] = "An unexpected error occurred while deleting the patient.";
+                _logger.LogError(ex, "Unexpected error occurred while deleting the patient.");
+            }
+
+            // If there was an error, return to the Index2 view without deleting the patient
+            return RedirectToAction("Index2");
         }
 
 

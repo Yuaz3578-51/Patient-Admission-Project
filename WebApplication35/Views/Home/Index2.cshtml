@@ -2,64 +2,24 @@
     ViewData["Title"] = "General Info";
 }
 
+<head>
+    <link rel="stylesheet" href="~/css/PatientStyle.css" />
+</head>
+
 <h2>@ViewData["Title"]</h2>
 
-<!-- Add a logout button -->
-<form method="post" asp-controller="Home" asp-action="Logout">
-    <button type="submit">Logout</button>
-</form>
-
-@if (ViewBag.ApplicationsData != null && ViewBag.ApplicationsData.Count > 0)
-{
-    <h3>Applications data from the database:</h3>
-    <table>
-        <thead>
-            <tr>
-                <th>AppID</th>
-                <th>PatientID</th>
-                <th>UnitID</th>
-                <th>StaffID</th>
-                <th>Record_Date</th>
-                <th>Diagnosis_ID</th>
-                <th>Diagnosis_Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var application in ViewBag.ApplicationsData)
-            {
-                <tr>
-                    <td>@application.AppID</td>
-                    <td>@application.PatientID</td>
-                    <td>@application.UnitID</td>
-                    <td>@application.StaffID</td>
-                    <td>@application.Record_Date</td>
-                    <td>@application.Diagnosis_ID</td>
-                    <td>@application.Diagnosis_Date</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-else
-{
-    <p>No applications data available.</p>
-}
-
- 
 @if (ViewBag.PatientsData != null && ViewBag.PatientsData.Count > 0)
 {
     <h3>Patients data from the database:</h3>
     <table>
         <thead>
             <tr>
-                <th>PatientID</th>
-                <th>PatientFName</th>
-                <th>PatientLName</th>
-                <th>PatientAddress</th>
-                <th>PatientDateOfBirth</th>
-                <th>PatientNumber</th>
-                <th>PatientPhone</th>
-                <th>Edit</th> <!-- Add a new column for the Edit button -->
+                <th>Patient ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Patient Number</th>
+                <th>Edit</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
@@ -69,12 +29,14 @@ else
                     <td>@patient.PatientID</td>
                     <td>@patient.PatientFName</td>
                     <td>@patient.PatientLName</td>
-                    <td>@patient.PatientAddress</td>
-                    <td>@patient.PatientDateOfBirth</td>
                     <td>@patient.PatientNumber</td>
-                    <td>@patient.PatientPhone</td>
                     <td>
                         <a asp-controller="Home" asp-action="EditPatient" asp-route-patientID="@patient.PatientID" class="btn btn-primary">Edit</a>
+                    </td>
+                    <td>
+                        <form asp-controller="Home" asp-action="DeletePatient" asp-route-patientID="@patient.PatientID" method="post">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
                     </td>
                 </tr>
             }
@@ -86,6 +48,7 @@ else
     <p>No patients data available.</p>
 }
 
-<!-- Add the button to go to the AddPatient page -->
-<a asp-controller="Home" asp-action="AddPatient" class="btn btn-primary">Add New Patient</a>
-
+<!-- Add some space between the table and the button -->
+<div class="add-patient-button-container">
+    <a asp-controller="Home" asp-action="AddPatient" class="btn btn-primary">Add New Patient</a>
+</div>
