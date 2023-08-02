@@ -12,5 +12,14 @@
         public int RandomStaffID { get; set; }
         public int RandomUnitID { get; set; }
         public int RandomApplicationID { get; set; }
+
+        // Constructor to initialize NewPatient, NewApplication, newUnit, and newStaff objects
+        public PatientApplicationViewModel()
+        {
+            NewPatient = new Patient();
+            NewApplication = new Application();
+            newUnit = new Unit();
+            newStaff = new Staff();
+        }
     }
 }
