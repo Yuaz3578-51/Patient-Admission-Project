@@ -1,36 +1,49 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using WebApplication35.Models;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApplication35.Models
 {
     [Table("PATIENT")]
     public class Patient
     {
-        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("PATIENTID")]
-        public int PatientID { get; set; }
+        public int PATIENTID { get; set; }
 
         [Column("PATIENTNUMBER")]
-        public int PatientNumber { get; set; }
+        public int PATIENTNUMBER { get; set; }
 
         [Column("PATIENTFNAME")]
-        public string? PatientFName { get; set; }
+        public string? PATIENTFNAME { get; set; }
 
         [Column("PATIENTLNAME")]
-        public string? PatientLName { get; set; }
+        public string? PATIENTLNAME { get; set; }
 
         [Column("PATIENTADDRESS")]
-        public string? PatientAddress { get; set; }
+        public string? PATIENTADDRESS { get; set; }
 
         [Column("PATIENTDATEOFBIRTH")]
-       // [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
-        public DateTime PatientDateOfBirth { get; set; }
+        public DateTime? PATIENTDATEOFBIRTH { get; set; }
 
         [Column("PATIENTPHONE")]
-        public string? PatientPhone { get; set; }
+        public string? PATIENTPHONE { get; set; }
+
+        [Column("RECORD_DATE")]
+        public DateTime? RECORD_DATE { get; set; }
+
+        [Column("DIAGNOSIS_DATE")]
+        public DateTime? DIAGNOSIS_DATE { get; set; }
+
+        // New properties for UNITID, STAFFID, and APPID
+        public int UNITID { get; set; }
+        public int STAFFID { get; set; }
+        public int APPID { get; set; }
 
         // Other properties
         // ...
+
+        public Application Application { get; set; }
+        public Unit Unit { get; set; }
+        public Staff Staff { get; set; }
     }
 }

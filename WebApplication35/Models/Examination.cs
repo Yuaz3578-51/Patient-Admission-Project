@@ -13,13 +13,13 @@ public class Examination
     public int ExamDefID { get; set; }
 
     [Column("APPID")]
-    public int AppId { get; set; }
+    public int APPID { get; set; }
 
     [Column("EXAMDATE")]
     public DateTime ExamDate { get; set; }
 
     // Navigation properties for the related entities
-    [ForeignKey("AppId")]
+    [ForeignKey("APPID")]
     public Application? Application { get; set; }
 
     [ForeignKey("ExamDefID")]

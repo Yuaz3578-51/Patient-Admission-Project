@@ -1,17 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using WebApplication35.Models;
-
 
 [Table("UNIT")]
 public class Unit
 {
-    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [Column("UNITID")]
-    public int UnitID { get; set; }
+    public int UNITID { get; set; }
 
     [Column("STAFFID")]
-    public int StaffID { get; set; }
+    public int STAFFID { get; set; }
 
     [Column("UNITADDRESS")]
     public string? UnitAddress { get; set; }
@@ -29,8 +27,8 @@ public class Unit
     public string? UnitDescription { get; set; }
 
     // Navigation property for the related entity
-    [ForeignKey("StaffID")]
-    public Staff? Staff { get; set; }
+    [ForeignKey("STAFFID")]
+    public Staff Staff { get; set; }
 
     // Other properties
     // ...

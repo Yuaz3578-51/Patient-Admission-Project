@@ -1,4 +1,7 @@
-﻿@{
+﻿@model (WebApplication35.Models.Patient, WebApplication35.Models.Application)
+
+
+@{
     ViewData["Title"] = "Patient";
 }
 
@@ -10,26 +13,26 @@
     <table>
         <thead>
             <tr>
-                <th>PatientID</th>
-                <th>PatientNumber</th>
-                <th>PatientFName</th>
-                <th>PatientLName</th>
-                <th>PatientAddress</th>
-                <th>PatientDateOfBirth</th>
-                <th>PatientPhone</th>
+                <th>PATIENTID</th>
+                <th>PATIENTNUMBER</th>
+                <th>PATIENTFNAME</th>
+                <th>PATIENTLNAME</th>
+                <th>PATIENTADDRESS</th>
+                <th>PATIENTDATEOFBIRTH</th>
+                <th>PATIENTPHONE</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in ViewBag.data)
             {
                 <tr>
-                    <td>@item.PatientID</td>
-                    <td>@item.PatientNumber</td>
-                    <td>@item.PatientFName</td>
-                    <td>@item.PatientLName</td>
-                    <td>@item.PatientAddress</td>
-                    <td>@item.PatientDateOfBirth</td>
-                    <td>@item.PatientPhone</td>
+                    <td>@item.PATIENTID</td>
+                    <td>@item.PATIENTNUMBER</td>
+                    <td>@item.PATIENTFNAME</td>
+                    <td>@item.PATIENTLNAME</td>
+                    <td>@item.PATIENTADDRESS</td>
+                    <td>@item.PATIENTDATEOFBIRTH</td>
+                    <td>@item.PATIENTPHONE</td>
                 </tr>
             }
         </tbody>

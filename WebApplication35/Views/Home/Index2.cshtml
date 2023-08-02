@@ -26,15 +26,15 @@
             @foreach (var patient in ViewBag.PatientsData)
             {
                 <tr>
-                    <td>@patient.PatientID</td>
-                    <td>@patient.PatientFName</td>
-                    <td>@patient.PatientLName</td>
-                    <td>@patient.PatientNumber</td>
+                    <td>@patient.PATIENTID</td>
+                    <td>@patient.PATIENTFNAME</td>
+                    <td>@patient.PATIENTLNAME</td>
+                    <td>@patient.PATIENTNUMBER</td>
                     <td>
-                        <a asp-controller="Home" asp-action="EditPatient" asp-route-patientID="@patient.PatientID" class="btn btn-primary">Edit</a>
+                        <a asp-controller="Home" asp-action="EditPatient" asp-route-PATIENTID="@patient.PATIENTID" class="btn btn-primary">Edit</a>
                     </td>
                     <td>
-                        <form asp-controller="Home" asp-action="DeletePatient" asp-route-patientID="@patient.PatientID" method="post">
+                        <form asp-controller="Home" asp-action="DeletePatient" asp-route-PATIENTID="@patient.PATIENTID" method="post">
                             <button type="submit" class="btn btn-danger">Delete</button>
                         </form>
                     </td>
@@ -50,5 +50,12 @@ else
 
 <!-- Add some space between the table and the button -->
 <div class="add-patient-button-container">
-    <a asp-controller="Home" asp-action="AddPatient" class="btn btn-primary">Add New Patient</a>
+    <a asp-controller="Home" asp-action="AddPatient"
+       data-random-patient-id="@ViewBag.RandomPatientID"
+       data-random-staff-id="@ViewBag.RandomStaffID"
+       data-random-unit-id="@ViewBag.RandomUnitID"
+       data-random-application-id="@ViewBag.RandomApplicationID"
+       data-random-patient-number="@ViewBag.RandomPatientNumber"
+       class="btn btn-primary">Add New Patient</a>
 </div>
+

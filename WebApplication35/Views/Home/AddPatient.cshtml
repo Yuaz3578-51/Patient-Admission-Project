@@ -1,64 +1,101 @@
-﻿@model WebApplication35.Models.Patient
+﻿@using System.Globalization
+@model WebApplication35.Models.PatientApplicationViewModel
 
 <h2>Patient Admission</h2>
 
-<!-- Add your patient admission form here -->
 @using (Html.BeginForm("AddPatient", "Home", FormMethod.Post))
 {
+    <!-- Patient Form Fields -->
     <div class="form-group">
-        <label for="PatientID">Patient ID:</label>
-        <input type="text" id="PatientID" name="PatientID" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label for="PatientFName">First Name:</label>
-        <input type="text" id="PatientFName" name="PatientFName" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label for="PatientLName">Last Name:</label>
-        <input type="text" id="PatientLName" name="PatientLName" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label for="PatientAddress">Address:</label>
-        <input type="text" id="PatientAddress" name="PatientAddress" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label for="PatientDateOfBirth">Date of Birth:</label>
-        <input type="date" id="PatientDateOfBirth" name="PatientDateOfBirth" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label for="PatientNumber">Patient Number:</label>
-        <input type="text" id="PatientNumber" name="PatientNumber" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label for="PatientPhone">Patient Phone:</label>
-        <input type="text" id="PatientPhone" name="PatientPhone" class="form-control" />
+        <label for="PATIENTID">Patient ID:</label>
+        <input type="text" class="form-control" id="PATIENTID" name="PATIENTID" value="@ViewBag.RandomPatientID" readonly>
     </div>
 
-    <!-- Additional properties -->
     <div class="form-group">
-        <label for="AppID">App ID:</label>
-        <input type="text" id="AppID" name="AppID" class="form-control" />
+        <label for="APPID">App ID</label>
+        <input type="text" class="form-control" id="APPID" name="APPID" value="@ViewBag.RandomApplicationID" readonly>
     </div>
+
     <div class="form-group">
-        <label for="UnitID">Unit ID:</label>
-        <input type="text" id="UnitID" name="UnitID" class="form-control" />
+        <label for="UNITID">Unit ID</label>
+        <input type="text" class="form-control" id="UNITID" name="UNITID" value="@ViewBag.RandomUnitID" readonly>
     </div>
+
     <div class="form-group">
-        <label for="StaffID">Staff ID:</label>
-        <input type="text" id="StaffID" name="StaffID" class="form-control" />
+        <label for="STAFFID">Staff ID</label>
+        <input type="text" class="form-control" id="STAFFID" name="STAFFID" value="@ViewBag.RandomStaffID" readonly>
     </div>
+
     <div class="form-group">
-        <label for="Record_Date">Record Date:</label>
-        <input type="date" id="Record_Date" name="Record_Date" class="form-control" />
+        <label for="PATIENTNUMBER">Patient Number:</label>
+        <input type="text" class="form-control" id="PATIENTNUMBER" name="PATIENTNUMBER" value="@ViewBag.RandomPatientID" readonly>
     </div>
+
     <div class="form-group">
-        <label for="Diagnosis_ID">Diagnosis ID:</label>
-        <input type="text" id="Diagnosis_ID" name="Diagnosis_ID" class="form-control" />
+        <label for="PATIENTFNAME">First Name:</label>
+        <input type="text" class="form-control" id="PATIENTFNAME" name="PATIENTFNAME" value="@Model.NewPatient.PATIENTFNAME" required>
     </div>
+
     <div class="form-group">
-        <label for="Diagnosis_Date">Diagnosis Date:</label>
-        <input type="date" id="Diagnosis_Date" name="Diagnosis_Date" class="form-control" />
+        <label for="PATIENTLNAME">Last Name:</label>
+        <input type="text" class="form-control" id="PATIENTLNAME" name="PATIENTLNAME" value="@Model.NewPatient.PATIENTLNAME" required>
+    </div>
+
+    <div class="form-group">
+        <label for="PATIENTPHONE">Phone Number:</label>
+        <input type="text" class="form-control" id="PATIENTPHONE" name="PATIENTPHONE" value="@Model.NewPatient.PATIENTPHONE">
+    </div>
+
+    <div class="form-group">
+        <label for="PATIENTADDRESS">Address:</label>
+        <input type="text" class="form-control" id="PATIENTADDRESS" name="PATIENTADDRESS" value="@Model.NewPatient.PATIENTADDRESS">
+    </div>
+
+    <div class="form-group">
+        <label for="PATIENTDATEOFBIRTH">Date of Birth:</label>
+        <input type="date" class="form-control" id="PATIENTDATEOFBIRTH" name="PATIENTDATEOFBIRTH" value="@Model.NewPatient.PATIENTDATEOFBIRTH?.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)">
+    </div>
+
+    <div class="form-group">
+        <label for="RECORD_DATE">Record Date:</label>
+        <input type="date" class="form-control" id="RECORD_DATE" name="RECORD_DATE" value="@Model.NewPatient.RECORD_DATE?.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)">
+    </div>
+
+    <div class="form-group">
+        <label for="DIAGNOSIS_DATE">Diagnosis Date:</label>
+        <input type="date" class="form-control" id="DIAGNOSIS_DATE" name="DIAGNOSIS_DATE" value="@Model.NewPatient.DIAGNOSIS_DATE?.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)">
+    </div>
+
+    <!-- Hidden input fields to hold auto-generated IDs -->
+    <input type="hidden" id="APPID" name="APPID" value="@ViewBag.RandomApplicationID">
+    <input type="hidden" id="UNITID" name="UNITID" value="@ViewBag.RandomUnitID">
+    <input type="hidden" id="STAFFID" name="STAFFID" value="@ViewBag.RandomStaffID">
+    <input type="hidden" id="PATIENTNUMBER" name="PATIENTNUMBER" value="@ViewBag.RandomPatientID">
+
+    <!-- Application Form Fields -->
+    <div class="form-group">
+        <label for="NewApplication_DIAGNOSIS_ID">Diagnosis ID:</label>
+        <input type="text" class="form-control" id="NewApplication_DIAGNOSIS_ID" name="NewApplication.DIAGNOSIS_ID" value="@Model.NewApplication?.DIAGNOSIS_ID">
     </div>
 
     <button type="submit" class="btn btn-primary">Admit Patient</button>
 }
+
+<!-- JavaScript to format date inputs before submitting the form -->
+<script>
+    // Function to format date inputs to the desired format before submitting the form
+    function formatDateInputs() {
+        var dateInputs = document.querySelectorAll('input[type="date"]');
+        dateInputs.forEach(function (input) {
+            if (input.value) {
+                var date = new Date(input.value);
+                var formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
+                input.value = formattedDate;
+            }
+        });
+    }
+
+    // Attach the formatDateInputs function to the form submit event
+    var form = document.querySelector('form');
+    form.addEventListener('submit', formatDateInputs);
+</script>

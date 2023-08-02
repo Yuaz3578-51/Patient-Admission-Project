@@ -17,7 +17,7 @@ public class Prescription
     public string? Formula { get; set; }
 
     [Column("APPID")]
-    public int AppID { get; set; }
+    public int APPID { get; set; }
 
     [Column("QUANTITY")]
     public int Quantity { get; set; }
@@ -29,7 +29,7 @@ public class Prescription
     public string? PrescDate { get; set; }
 
     // Navigation properties for the related entities
-    [ForeignKey("AppID")]
+    [ForeignKey("APPID")]
     public Application? Application { get; set; }
 
     [ForeignKey("Drug_ID")]

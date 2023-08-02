@@ -9,36 +9,29 @@ namespace WebApplication35.Models
     {
         [Key]
         [Column("APPID")]
-        public int AppID { get; set; }
+        public int APPID { get; set; }
 
         [Column("PATIENTID")]
-        public int PatientID { get; set; }
+        public int PATIENTID { get; set; }
 
         [Column("UNITID")]
-        public int UnitID { get; set; }
+        public int UNITID { get; set; }
 
         [Column("STAFFID")]
-        public int StaffID { get; set; }
-
-        [Column("RECORD_DATE")]
-       // [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
-        public DateTime Record_Date { get; set; }
+        public int STAFFID { get; set; }
 
         [Column("DIAGNOSIS_ID")]
-        public int Diagnosis_ID { get; set; }
+        public int DIAGNOSIS_ID { get; set; }
 
-        [Column("DIAGNOSIS_DATE")]
-       // [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
-        public DateTime Diagnosis_Date { get; set; }
 
         // Navigation properties for the related entities
-        [ForeignKey("PatientID")]
+        [ForeignKey("PATIENTID")]
         public Patient? Patient { get; set; }
 
-        [ForeignKey("UnitID")]
+        [ForeignKey("UNITID")]
         public Unit? Unit { get; set; }
 
-        [ForeignKey("StaffID")]
+        [ForeignKey("STAFFID")]
         public Staff? Staff { get; set; }
 
         // Other properties

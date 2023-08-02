@@ -1,13 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using WebApplication35.Models;
 
 [Table("STAFF")]
 public class Staff
 {
-    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [Column("STAFFID")]
-    public int StaffID { get; set; }
+    public int STAFFID { get; set; }
 
     [Column("HOSPITALID")]
     public int HospitalID { get; set; }
@@ -16,7 +15,7 @@ public class Staff
     public int StID { get; set; }
 
     [Column("UNITID")]
-    public int UnitID { get; set; }
+    public int UNITID { get; set; }
 
     [Column("STAFFFNAME")]
     public string? StaffFName { get; set; }
@@ -34,7 +33,7 @@ public class Staff
     [ForeignKey("StID")]
     public Staff_Type? StaffType { get; set; }
 
-    [ForeignKey("UnitID")]
+    [ForeignKey("UNITID")]
     public Unit? Unit { get; set; }
 
     // Other properties

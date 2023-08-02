@@ -14,13 +14,13 @@ public class Payment
     public int AdmissionID { get; set; }
 
     [Column("APPID")]
-    public int AppID { get; set; }
+    public int APPID { get; set; }
 
     [Column("TOTALCOST")]
     public string? TotalCost { get; set; }
 
     // Navigation property for the related entity
-    [ForeignKey("AppID")]
+    [ForeignKey("APPID")]
     public Application? Application { get; set; }
 
     // Other properties
