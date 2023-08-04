@@ -10,7 +10,7 @@
 
 @if (ViewBag.PatientsData != null && ViewBag.PatientsData.Count > 0)
 {
-    <h3>Patients Info:</h3>
+    <h3>Patients data from the database:</h3>
     <table>
         <thead>
             <tr>
@@ -31,10 +31,10 @@
                     <td>@patient.PATIENTLNAME</td>
                     <td>@patient.PATIENTNUMBER</td>
                     <td>
-                        <a asp-controller="Home" asp-action="EditPatient" asp-route-PATIENTID="@patient.PATIENTID" class="btn btn-primary">Edit</a>
+                        <a asp-controller="Home" asp-action="EditPatient" asp-route-patientID="@patient.PATIENTID" class="btn btn-primary">Edit</a>
                     </td>
                     <td>
-                        <form asp-controller="Home" asp-action="DeletePatient" asp-route-PATIENTID="@patient.PATIENTID" method="post">
+                        <form asp-controller="Home" asp-action="DeletePatient" asp-route-patientID="@patient.PATIENTID" method="post">
                             <button type="submit" class="btn btn-danger">Delete</button>
                         </form>
                     </td>
@@ -50,12 +50,5 @@ else
 
 <!-- Add some space between the table and the button -->
 <div class="add-patient-button-container">
-    <a asp-controller="Home" asp-action="AddPatient"
-       data-random-patient-id="@ViewBag.RandomPatientID"
-       data-random-staff-id="@ViewBag.RandomStaffID"
-       data-random-unit-id="@ViewBag.RandomUnitID"
-       data-random-application-id="@ViewBag.RandomApplicationID"
-       data-random-patient-number="@ViewBag.RandomPatientNumber"
-       class="btn btn-primary">Add New Patient</a>
+    <a asp-controller="Home" asp-action="AddPatient" class="btn btn-primary">Add New Patient</a>
 </div>
-

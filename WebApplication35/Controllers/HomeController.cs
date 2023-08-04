@@ -41,87 +41,188 @@ namespace WebApplication35.Controllers
 
 
 
+        //public IActionResult AddPatient()
+        //{
+        //    ViewBag.RandomPatientID = new Random().Next(2, 99);
+        //    ViewBag.RandomApplicationID = new Random().Next(2, 99);
+        //    ViewBag.RandomUnitID = new Random().Next(2, 99);
+        //    ViewBag.RandomStaffID = new Random().Next(2, 99);
+
+        //    var viewModel = new PatientApplicationViewModel
+        //    {
+        //        NewPatient = new Patient(),
+        //        NewApplication = new Application(),
+        //    };
+
+        //    return View(viewModel);
+        //}
+
+        //[HttpPost]
+        //public IActionResult AddPatient(PatientApplicationViewModel viewModel)
+        //{
+        //    try
+        //    {
+        //        string connectionString = "Data Source=ORCL;User Id=YUNUS;Password=12345; Connection Timeout=60; Max Pool Size=150; data source= (DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = YUNUS-SAHBAZ.probel.local)(PORT = 1521)) (CONNECT_DATA =(SERVER = DEDICATED)(SERVICE_NAME = ORCL)))";
+
+        //        CultureInfo turkishCulture = new CultureInfo("tr-TR");
+        //        string formattedDob = null;
+
+        //        // ... (existing code for date formatting) ...
+
+        //        using (OracleConnection connection = new OracleConnection(connectionString))
+        //        {
+        //            connection.Open();
+
+        //            // Insert the patient data into the PATIENT table
+        //            string addPatientData = "INSERT INTO PATIENT (PATIENTID, PATIENTFNAME, PATIENTLNAME, PATIENTADDRESS, PATIENTNUMBER, PATIENTPHONE, PATIENTDATEOFBIRTH, RECORD_DATE, DIAGNOSIS_DATE) VALUES " +
+        //                "(:PATIENTID, :PATIENTFNAME, :PATIENTLNAME, :PATIENTADDRESS, :PATIENTNUMBER, :PATIENTPHONE, :PATIENTDATEOFBIRTH, :RECORD_DATE, :DIAGNOSIS_DATE)";
+
+        //            using (OracleCommand patientAddCmd = new OracleCommand(addPatientData, connection))
+        //            {
+        //                patientAddCmd.Parameters.Add(":PATIENTID", OracleDbType.Int32).Value = viewModel.NewPatient.PATIENTID;
+        //                patientAddCmd.Parameters.Add(":PATIENTFNAME", OracleDbType.Varchar2).Value = viewModel.NewPatient.PATIENTFNAME;
+        //                patientAddCmd.Parameters.Add(":PATIENTLNAME", OracleDbType.Varchar2).Value = viewModel.NewPatient.PATIENTLNAME;
+        //                patientAddCmd.Parameters.Add(":PATIENTADDRESS", OracleDbType.Varchar2).Value = viewModel.NewPatient.PATIENTADDRESS;
+        //                patientAddCmd.Parameters.Add(":PATIENTNUMBER", OracleDbType.Int32).Value = viewModel.NewPatient.PATIENTNUMBER;
+        //                patientAddCmd.Parameters.Add(":PATIENTPHONE", OracleDbType.Varchar2).Value = viewModel.NewPatient.PATIENTPHONE;
+        //                patientAddCmd.Parameters.Add(":PATIENTDATEOFBIRTH", OracleDbType.Date).Value = viewModel.NewPatient.PATIENTDATEOFBIRTH;
+        //                patientAddCmd.Parameters.Add(":RECORD_DATE", OracleDbType.Date).Value = viewModel.NewPatient.RECORD_DATE;
+        //                patientAddCmd.Parameters.Add(":DIAGNOSIS_DATE", OracleDbType.Date).Value = viewModel.NewPatient.DIAGNOSIS_DATE;
+
+        //                patientAddCmd.ExecuteNonQuery();
+        //            }
+
+        //            // Insert the application data into the APPLICATION table
+        //            string addApplicationData = "INSERT INTO APPLICATION (APPID, DIAGNOSIS_ID, PATIENTID, UNITID, STAFFID) VALUES (:APPID, :DIAGNOSIS_ID, :PATIENTID, :UNITID, :STAFFID)";
+
+        //            using (OracleCommand applicationAddCmd = new OracleCommand(addApplicationData, connection))
+        //            {
+        //                applicationAddCmd.Parameters.Add(":APPID", OracleDbType.Int32).Value = viewModel.NewApplication.APPID;
+        //                applicationAddCmd.Parameters.Add(":DIAGNOSIS_ID", OracleDbType.Int32).Value = viewModel.NewApplication.DIAGNOSIS_ID;
+        //                applicationAddCmd.Parameters.Add(":PATIENTID", OracleDbType.Int32).Value = viewModel.NewPatient.PATIENTID;
+
+        //                // Assuming you have the UNITID and STAFFID values to insert
+        //                applicationAddCmd.Parameters.Add(":UNITID", OracleDbType.Int32).Value = viewModel.newUnit.UNITID;
+        //                applicationAddCmd.Parameters.Add(":STAFFID", OracleDbType.Int32).Value = viewModel.newStaff.STAFFID;
+
+        //                applicationAddCmd.ExecuteNonQuery();
+        //            }
+        //        }
+
+        //        // Redirect to the Index2 action after successfully adding the patient information
+        //        return RedirectToAction("Index2");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Handle any exceptions
+        //        _logger.LogError(ex, "Error occurred while adding a new patient.");
+        //        ViewData["ErrorMessage"] = "An error occurred while adding a new patient.";
+        //    }
+
+        //    // If there was an error, return to the AddPatient view to allow the user to try again
+        //    return RedirectToAction("AddPatient");
+        //}
+
+
+
+
+        [HttpGet]
         public IActionResult AddPatient()
         {
-            ViewBag.RandomPatientID = new Random().Next(2, 99);
-            ViewBag.RandomApplicationID = new Random().Next(2, 99);
-            ViewBag.RandomUnitID = new Random().Next(2, 99);
-            ViewBag.RandomStaffID = new Random().Next(2, 99);
-
-            var viewModel = new PatientApplicationViewModel
-            {
-                NewPatient = new Patient(),
-                NewApplication = new Application(),
-            };
-
-            return View(viewModel);
+            // Create a new instance of the Patient model and pass it to the view
+            Patient newPatient = new Patient();
+            return View(newPatient);
         }
 
         [HttpPost]
-        public IActionResult AddPatient(PatientApplicationViewModel viewModel)
+        public IActionResult AddPatient(Patient newPatient)
         {
             try
             {
+                // Create the OracleConnection using your connection string
                 string connectionString = "Data Source=ORCL;User Id=YUNUS;Password=12345; Connection Timeout=60; Max Pool Size=150; data source= (DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = YUNUS-SAHBAZ.probel.local)(PORT = 1521)) (CONNECT_DATA =(SERVER = DEDICATED)(SERVICE_NAME = ORCL)))";
 
-                CultureInfo turkishCulture = new CultureInfo("tr-TR");
-                string formattedDob = null;
-
-                // ... (existing code for date formatting) ...
-
-                using (OracleConnection connection = new OracleConnection(connectionString))
-                {
-                    connection.Open();
-
-                    // Insert the patient data into the PATIENT table
-                    string addPatientData = "INSERT INTO PATIENT (PATIENTID, PATIENTFNAME, PATIENTLNAME, PATIENTADDRESS, PATIENTNUMBER, PATIENTPHONE, PATIENTDATEOFBIRTH, RECORD_DATE, DIAGNOSIS_DATE) VALUES " +
-                        "(:PATIENTID, :PATIENTFNAME, :PATIENTLNAME, :PATIENTADDRESS, :PATIENTNUMBER, :PATIENTPHONE, :PATIENTDATEOFBIRTH, :RECORD_DATE, :DIAGNOSIS_DATE)";
-
-                    using (OracleCommand patientAddCmd = new OracleCommand(addPatientData, connection))
+                    using (OracleConnection connection = new OracleConnection(connectionString))
                     {
-                        patientAddCmd.Parameters.Add(":PATIENTID", OracleDbType.Int32).Value = viewModel.NewPatient.PATIENTID;
-                        patientAddCmd.Parameters.Add(":PATIENTFNAME", OracleDbType.Varchar2).Value = viewModel.NewPatient.PATIENTFNAME;
-                        patientAddCmd.Parameters.Add(":PATIENTLNAME", OracleDbType.Varchar2).Value = viewModel.NewPatient.PATIENTLNAME;
-                        patientAddCmd.Parameters.Add(":PATIENTADDRESS", OracleDbType.Varchar2).Value = viewModel.NewPatient.PATIENTADDRESS;
-                        patientAddCmd.Parameters.Add(":PATIENTNUMBER", OracleDbType.Int32).Value = viewModel.NewPatient.PATIENTNUMBER;
-                        patientAddCmd.Parameters.Add(":PATIENTPHONE", OracleDbType.Varchar2).Value = viewModel.NewPatient.PATIENTPHONE;
-                        patientAddCmd.Parameters.Add(":PATIENTDATEOFBIRTH", OracleDbType.Date).Value = viewModel.NewPatient.PATIENTDATEOFBIRTH;
-                        patientAddCmd.Parameters.Add(":RECORD_DATE", OracleDbType.Date).Value = viewModel.NewPatient.RECORD_DATE;
-                        patientAddCmd.Parameters.Add(":DIAGNOSIS_DATE", OracleDbType.Date).Value = viewModel.NewPatient.DIAGNOSIS_DATE;
+                        connection.Open();
 
-                        patientAddCmd.ExecuteNonQuery();
+                        // Create the OracleCommand with the INSERT query
+                        string insertQuery = "INSERT INTO PATIENT (PATIENTID, PATIENTFNAME, PATIENTLNAME, PATIENTADDRESS, PATIENTDATEOFBIRTH, PATIENTNUMBER, PATIENTPHONE, RECORD_DATE) " +
+                                             "VALUES (PATIENT_ID_SEQ.NEXTVAL, :PATIENTFNAME, :PATIENTLNAME, :PATIENTADDRESS, :PATIENTDATEOFBIRTH, :PATIENTNUMBER, :PATIENTPHONE, :RECORD_DATE)";
+
+                        using (OracleCommand cmd = new OracleCommand(insertQuery, connection))
+                        {
+                            // Add parameters to the command
+                            cmd.Parameters.Add(new OracleParameter("PATIENTFNAME", OracleDbType.Varchar2)).Value = newPatient.PATIENTFNAME;
+                            cmd.Parameters.Add(new OracleParameter("PATIENTLNAME", OracleDbType.Varchar2)).Value = newPatient.PATIENTLNAME;
+                            cmd.Parameters.Add(new OracleParameter("PATIENTADDRESS", OracleDbType.Varchar2)).Value = string.IsNullOrEmpty(newPatient.PATIENTADDRESS) ? (object)DBNull.Value : newPatient.PATIENTADDRESS;
+                            cmd.Parameters.Add(new OracleParameter("PATIENTDATEOFBIRTH", OracleDbType.Date)).Value = newPatient.PATIENTDATEOFBIRTH ?? (object)DBNull.Value;
+                            cmd.Parameters.Add(new OracleParameter("PATIENTNUMBER", OracleDbType.Int32)).Value = newPatient.PATIENTNUMBER.HasValue ? newPatient.PATIENTNUMBER.Value : (object)DBNull.Value;
+                            cmd.Parameters.Add(new OracleParameter("PATIENTPHONE", OracleDbType.Varchar2)).Value = string.IsNullOrEmpty(newPatient.PATIENTPHONE) ? (object)DBNull.Value : newPatient.PATIENTPHONE;
+                            cmd.Parameters.Add(new OracleParameter("RECORD_DATE", OracleDbType.Date)).Value = newPatient.RECORD_DATE ?? (object)DBNull.Value;
+
+                            // Execute the query
+                            cmd.ExecuteNonQuery();
+                        }
                     }
 
-                    // Insert the application data into the APPLICATION table
-                    string addApplicationData = "INSERT INTO APPLICATION (APPID, DIAGNOSIS_ID, PATIENTID, UNITID, STAFFID) VALUES (:APPID, :DIAGNOSIS_ID, :PATIENTID, :UNITID, :STAFFID)";
-
-                    using (OracleCommand applicationAddCmd = new OracleCommand(addApplicationData, connection))
+                    // After successfully adding the patient, fetch the updated patient data and pass it to the Index2 view
+                    List<Patient> patients = new List<Patient>();
+                    using (OracleConnection connection = new OracleConnection(connectionString))
                     {
-                        applicationAddCmd.Parameters.Add(":APPID", OracleDbType.Int32).Value = viewModel.NewApplication.APPID;
-                        applicationAddCmd.Parameters.Add(":DIAGNOSIS_ID", OracleDbType.Int32).Value = viewModel.NewApplication.DIAGNOSIS_ID;
-                        applicationAddCmd.Parameters.Add(":PATIENTID", OracleDbType.Int32).Value = viewModel.NewPatient.PATIENTID;
+                        connection.Open();
+                        string selectQuery = "SELECT * FROM PATIENT";
+                        using (OracleCommand cmd = new OracleCommand(selectQuery, connection))
+                        {
+                            using (OracleDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    Patient patient = new Patient
+                                    {
+                                        PATIENTID = reader.GetInt32(reader.GetOrdinal("PATIENTID")),
+                                        PATIENTFNAME = reader.GetString(reader.GetOrdinal("PATIENTFNAME")),
+                                        PATIENTLNAME = reader.GetString(reader.GetOrdinal("PATIENTLNAME")),
+                                        PATIENTADDRESS = reader.IsDBNull(reader.GetOrdinal("PATIENTADDRESS")) ? null : reader.GetString(reader.GetOrdinal("PATIENTADDRESS")),
+                                        PATIENTDATEOFBIRTH = reader.IsDBNull(reader.GetOrdinal("PATIENTDATEOFBIRTH")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("PATIENTDATEOFBIRTH")),
+                                        PATIENTNUMBER = reader.IsDBNull(reader.GetOrdinal("PATIENTNUMBER")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("PATIENTNUMBER")),
+                                        PATIENTPHONE = reader.IsDBNull(reader.GetOrdinal("PATIENTPHONE")) ? null : reader.GetString(reader.GetOrdinal("PATIENTPHONE")),
+                                        RECORD_DATE = reader.IsDBNull(reader.GetOrdinal("RECORD_DATE")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("RECORD_DATE"))
+                                    };
 
-                        // Assuming you have the UNITID and STAFFID values to insert
-                        applicationAddCmd.Parameters.Add(":UNITID", OracleDbType.Int32).Value = viewModel.newUnit.UNITID;
-                        applicationAddCmd.Parameters.Add(":STAFFID", OracleDbType.Int32).Value = viewModel.newStaff.STAFFID;
-
-                        applicationAddCmd.ExecuteNonQuery();
+                                    patients.Add(patient);
+                                }
+                            }
+                        }
                     }
-                }
 
-                // Redirect to the Index2 action after successfully adding the patient information
-                return RedirectToAction("Index2");
+                    // Pass the patient data to the view
+                    ViewBag.data = patients;
+
+                    _logger.LogInformation("New patient added: {PATIENTID}, {PATIENTFNAME}, {PATIENTLNAME}, {PATIENTADDRESS}, {PATIENTDATEOFBIRTH}, {PATIENTNUMBER}, {PATIENTPHONE}, {RECORD_DATE}",
+                        newPatient.PATIENTID, newPatient.PATIENTFNAME, newPatient.PATIENTLNAME, newPatient.PATIENTADDRESS, newPatient.PATIENTDATEOFBIRTH, newPatient.PATIENTNUMBER, newPatient.PATIENTPHONE, newPatient.RECORD_DATE);
+
+                    // Redirect to the Index2 action after successfully adding the patient
+                    return RedirectToAction("Index2");
+
+            }
+            catch (OracleException ex)
+            {
+                // Handle any exceptions related to the database connection or query
+                ViewData["ErrorMessage"] = "An error occurred while adding the patient to the database.";
+                _logger.LogError(ex, "Error occurred while adding the patient to the database.");
             }
             catch (Exception ex)
             {
-                // Handle any exceptions
-                _logger.LogError(ex, "Error occurred while adding a new patient.");
-                ViewData["ErrorMessage"] = "An error occurred while adding a new patient.";
+                // Handle other exceptions
+                ViewData["ErrorMessage"] = "An unexpected error occurred while adding the patient.";
+                _logger.LogError(ex, "Unexpected error occurred while adding the patient.");
             }
 
-            // If there was an error, return to the AddPatient view to allow the user to try again
-            return RedirectToAction("AddPatient");
+            // If there was an error, return to the Index2 view without adding the patient
+            return RedirectToAction("Index2");
         }
+
 
 
 
@@ -146,7 +247,7 @@ namespace WebApplication35.Controllers
                 return RedirectToAction("Index2");
             }
             /*
-            else if (username == "asd" && password == "12345") {
+            else if (username == "asd" && password == "123") {
                 return RedirectToAction("Index2");
 
             }
@@ -192,6 +293,7 @@ namespace WebApplication35.Controllers
                                     UNITID = dr.GetInt32(dr.GetOrdinal("UNITID")),
                                     STAFFID = dr.GetInt32(dr.GetOrdinal("STAFFID")),
                                     DIAGNOSIS_ID = dr.GetInt32(dr.GetOrdinal("DIAGNOSIS_ID")),
+                                    DIAGNOSIS_DATE = dr.GetDateTime(dr.GetOrdinal("DIAGNOSIS_DATE")),
                                 };
 
                                 applications.Add(application);
@@ -200,7 +302,7 @@ namespace WebApplication35.Controllers
                     }
 
                     // Fetch data from the Patient table
-                    using (OracleCommand cmd = new OracleCommand("SELECT * FROM PATIENT", conn))
+                    using (OracleCommand cmd = new OracleCommand("SELECT * FROM Patient", conn))
                     {
                         using (OracleDataReader dr = cmd.ExecuteReader())
                         {
@@ -216,8 +318,7 @@ namespace WebApplication35.Controllers
                                     PATIENTDATEOFBIRTH = dr.GetDateTime(dr.GetOrdinal("PATIENTDATEOFBIRTH")),
                                     PATIENTNUMBER = dr.GetInt32(dr.GetOrdinal("PATIENTNUMBER")),
                                     PATIENTPHONE = dr.GetString(dr.GetOrdinal("PATIENTPHONE")),
-                                    RECORD_DATE = dr.GetDateTime(dr.GetOrdinal("RECORD_DATE")),
-                                    DIAGNOSIS_DATE = dr.GetDateTime(dr.GetOrdinal("DIAGNOSIS_DATE"))
+                                    RECORD_DATE = dr.GetDateTime(dr.GetOrdinal("RECORD_DATE"))
                                 };
 
                                 patients.Add(patient);
@@ -225,12 +326,6 @@ namespace WebApplication35.Controllers
                         }
                     }
                 }
-
-                // Generate random IDs and store them in ViewBag
-                ViewBag.RandomPatientID = new Random().Next(2, 100);
-                ViewBag.RandomStaffID = new Random().Next(2, 100);
-                ViewBag.RandomUnitID = new Random().Next(2, 100);
-                ViewBag.RandomApplicationID = new Random().Next(2, 100);
 
                 // Pass the data to the view using ViewBag
                 ViewBag.ApplicationsData = applications;
@@ -290,8 +385,7 @@ namespace WebApplication35.Controllers
                                     PATIENTDATEOFBIRTH = reader.GetDateTime(reader.GetOrdinal("PATIENTDATEOFBIRTH")),
                                     PATIENTNUMBER = reader.GetInt32(reader.GetOrdinal("PATIENTNUMBER")),
                                     PATIENTPHONE = reader.GetString(reader.GetOrdinal("PATIENTPHONE")),
-                                    RECORD_DATE = reader.GetDateTime(reader.GetOrdinal("RECORD_DATE")),
-                                    DIAGNOSIS_DATE = reader.GetDateTime(reader.GetOrdinal("DIAGNOSIS_DATE"))
+                                    RECORD_DATE = reader.GetDateTime(reader.GetOrdinal("RECORD_DATE"))
                                 };
                             }
                         }
@@ -358,11 +452,11 @@ namespace WebApplication35.Controllers
                 DateTime parsedRecDate = DateTime.ParseExact(recDate, "dd-MMM-yyyy", turkishCulture);
                 string formattedRecDate = parsedRecDate.ToString("dd-MMM-yyyy");
 
-                string diagDate = editedPatient.DIAGNOSIS_DATE?.ToString("dd-MMM-yyyy", turkishCulture);
-                DateTime parsedDiagDate = DateTime.ParseExact(diagDate, "dd-MMM-yyyy", turkishCulture);
-                string formattedDiagDate = parsedDiagDate.ToString("dd-MMM-yyyy");
+                //string diagDate = editedPatient.DIAGNOSIS_DATE?.ToString("dd-MMM-yyyy", turkishCulture);
+                //DateTime parsedDiagDate = DateTime.ParseExact(diagDate, "dd-MMM-yyyy", turkishCulture);
+                //string formattedDiagDate = parsedDiagDate.ToString("dd-MMM-yyyy");
 
-                string updatePatientData = "UPDATE PATIENT SET PATIENTFNAME='" + editedPatient.PATIENTFNAME + "', PATIENTLNAME='" + editedPatient.PATIENTLNAME + "', PATIENTADDRESS='" + editedPatient.PATIENTADDRESS + "', PATIENTNUMBER='" + editedPatient.PATIENTNUMBER + "', PATIENTPHONE='" + editedPatient.PATIENTPHONE + "', PATIENTDATEOFBIRTH=TO_DATE('" + formattedDate + "', 'DD-MON-YYYY'), RECORD_DATE=TO_DATE('" + formattedRecDate + "', 'DD-MON-YYYY'), DIAGNOSIS_DATE=TO_DATE('" + formattedDiagDate + "', 'DD-MON-YYYY') WHERE PATIENTID=" + editedPatient.PATIENTID;
+                string updatePatientData = "UPDATE PATIENT SET PATIENTFNAME='" + editedPatient.PATIENTFNAME + "', PATIENTLNAME='" + editedPatient.PATIENTLNAME + "', PATIENTADDRESS='" + editedPatient.PATIENTADDRESS + "', PATIENTNUMBER='" + editedPatient.PATIENTNUMBER + "', PATIENTPHONE='" + editedPatient.PATIENTPHONE + "', PATIENTDATEOFBIRTH=TO_DATE('" + formattedDate + "', 'DD-MON-YYYY'), RECORD_DATE=TO_DATE('" + formattedRecDate + "', 'DD-MON-YYYY') WHERE PATIENTID=" + editedPatient.PATIENTID;
                 string updateApplicationData = "UPDATE APPLICATION SET APPID=" + editedApplication.APPID + ", DIAGNOSIS_ID=" + editedApplication.DIAGNOSIS_ID + " WHERE PATIENTID=" + editedPatient.PATIENTID;
                 
                 string combinedUpdateData = updatePatientData + "; " + updateApplicationData;
@@ -399,10 +493,10 @@ namespace WebApplication35.Controllers
                 editedPatient.PATIENTNUMBER = 0;
                 editedPatient.PATIENTPHONE = "";
                 editedPatient.PATIENTDATEOFBIRTH = DateTime.MinValue;
+                editedPatient.RECORD_DATE = DateTime.MinValue;
                 editedApplication.APPID = 0;
                 editedApplication.DIAGNOSIS_ID = 0;
-                editedPatient.RECORD_DATE = DateTime.MinValue;
-                editedPatient.DIAGNOSIS_DATE = DateTime.MinValue;
+                editedApplication.DIAGNOSIS_DATE = DateTime.MinValue;
 
                 // Redirect to the Index2 action after successfully updating the patient and application information
                 return RedirectToAction("Index2");

@@ -11,13 +11,13 @@ namespace WebApplication35.Models
         public int PATIENTID { get; set; }
 
         [Column("PATIENTNUMBER")]
-        public int PATIENTNUMBER { get; set; }
+        public int? PATIENTNUMBER { get; set; }
 
         [Column("PATIENTFNAME")]
-        public string? PATIENTFNAME { get; set; }
+        public string PATIENTFNAME { get; set; }
 
         [Column("PATIENTLNAME")]
-        public string? PATIENTLNAME { get; set; }
+        public string PATIENTLNAME { get; set; }
 
         [Column("PATIENTADDRESS")]
         public string? PATIENTADDRESS { get; set; }
@@ -31,8 +31,6 @@ namespace WebApplication35.Models
         [Column("RECORD_DATE")]
         public DateTime? RECORD_DATE { get; set; }
 
-        [Column("DIAGNOSIS_DATE")]
-        public DateTime? DIAGNOSIS_DATE { get; set; }
 
         // New properties for UNITID, STAFFID, and APPID
         public int UNITID { get; set; }

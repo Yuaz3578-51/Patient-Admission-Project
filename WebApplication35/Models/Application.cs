@@ -23,6 +23,9 @@ namespace WebApplication35.Models
         [Column("DIAGNOSIS_ID")]
         public int DIAGNOSIS_ID { get; set; }
 
+        [Column("DIAGNOSIS_DATE")]
+        public DateTime? DIAGNOSIS_DATE { get; set; }
+
 
         // Navigation properties for the related entities
         [ForeignKey("PATIENTID")]
